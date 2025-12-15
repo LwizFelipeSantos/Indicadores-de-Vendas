@@ -1,0 +1,20 @@
+# Dependências (se você decidir usar npm no futuro)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de Build
+dist/
+build/
+
+# Variáveis de Ambiente (Segurança)
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
