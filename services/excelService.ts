@@ -28,7 +28,7 @@ export const parseSalesFile = async (file: File, managerMap: Map<string, Manager
         const worksheet = workbook.Sheets[firstSheetName];
         
         // Convert to JSON with header mapping
-        const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][];
         
         if (rawData.length < 2) {
           reject(new Error("Arquivo vazio ou formato inválido"));
