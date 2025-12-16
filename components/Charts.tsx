@@ -98,12 +98,12 @@ export const ItemsPerSellerChart: React.FC<RankingChartProps> = ({ data, title }
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200">{title}</h3>
         
-        <div className="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-lg overflow-x-auto max-w-full">
+        <div className="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-lg">
           {(Object.keys(config) as MetricType[]).map((key) => (
             <button
               key={key}
               onClick={() => setMetric(key)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
                 metric === key 
                   ? 'bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-sm' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
