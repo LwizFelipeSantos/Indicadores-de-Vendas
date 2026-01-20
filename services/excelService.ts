@@ -207,29 +207,32 @@ export const parseManagerMap = async (file: File): Promise<Map<string, ManagerIn
 };
 
 export const exportToExcel = (data: SaleRecord[], filename: string) => {
-  const exportData = data.map(d => {
-    const cupomCount = Number(d.cupom) || (d.cupom ? 1 : 0);
-    const itensPerCupom = cupomCount > 0 ? d.qtd / cupomCount : 0;
-    const ticketMedio = cupomCount > 0 ? d.valor / cupomCount : 0;
+  try {
+    const exportData = data.map(d => {
+      const cupomCount = Number(d.cupom) || (d.cupom ? 1 : 0);
+      const itensPerCupom = cupomCount > 0 ? d.qtd / cupomCount : 0;
+      const ticketMedio = cupomCount > 0 ? d.valor / cupomCount : 0;
 
-    return {
-      Data: d.data.toLocaleDateString('pt-BR'),
-      Loja: d.loja,
-      Cidade: d.cidade,
-      Vendedor: d.vendedor,
-      Gerente: d.gerente,
-      Produto: d.produto, 
-      'Código': d.codigo, // Added to export
-      'Valor Total': d.valor,
-      'Qtd Total': d.qtd,
-      'Qtd Cupons': d.cupom, 
-      'Itens/Cupom': itensPerCupom.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-      'Ticket Médio': ticketMedio.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    };
-  });
+      return {
+        Data: d.data.toLocaleDateString('pt-BR'),
+        Loja: d.loja,
+        Cidade: d.cidade,
+        Vendedor: d.vendedor,
+        Gerente: d.gerente,
+        'Valor Total': d.valor,
+        'Qtd Total': d.qtd,
+        'Qtd Cupons': d.cupom, 
+        'Itens/Cupom': itensPerCupom.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+        'Ticket Médio': ticketMedio.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      };
+    });
 
-  const ws = XLSX.utils.json_to_sheet(exportData);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Indicadores");
-  XLSX.writeFile(wb, filename);
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Indicadores");
+    XLSX.writeFile(wb, filename);
+  } catch (error) {
+    console.error("Erro ao exportar Excel:", error);
+    throw new Error("Não foi possível gerar o arquivo Excel.");
+  }
 };
